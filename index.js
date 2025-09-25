@@ -1,4 +1,3 @@
-// === IMPORTS ===
 const { Client, GatewayIntentBits, PermissionsBitField, ChannelType } = require('discord.js');
 const express = require('express');
 const app = express();
@@ -16,7 +15,6 @@ const siteLink = 'https://sites.google.com/view/soverignlandsrealm';
 const guildId = 'YOUR_GUILD_ID';
 let countries = {};
 
-// GLOBAL CHANNELS
 async function setupGlobalChannels(guild) {
   if (guild.channels.cache.find(c => c.name === 'World Chat')) return;
 
@@ -34,7 +32,6 @@ async function setupGlobalChannels(guild) {
   console.log('✅ Global channels created!');
 }
 
-// HELPER FUNCTIONS
 async function createCountry(message, countryName, color='BLUE') {
   const guild = message.guild;
   if (countries[countryName.toLowerCase()]) return message.channel.send('❌ Country exists.');
@@ -63,7 +60,6 @@ async function joinCountry(message, countryName) {
   message.channel.send(`✅ You joined **${countryName}**!`);
 }
 
-// COMMANDS
 client.once('ready', async () => {
   console.log(`Logged in as ${client.user.tag}!`);
   const guild = client.guilds.cache.get(guildId);
@@ -82,9 +78,7 @@ client.on('messageCreate', async (message) => {
   if (command === '!website') message.channel.send(`🌐 Realm website: ${siteLink}`);
 });
 
-// WEB SERVER (keeps bot awake)
 app.get('/', (req,res) => res.send('Bot is running!'));
 app.listen(3000, ()=>console.log('Web server running on port 3000'));
 
-// LOGIN
 client.login(token);
